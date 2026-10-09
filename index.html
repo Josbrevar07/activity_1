@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Life Situations with Modals</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Responsive -->
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        margin-top: 20px;
+      }
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 20px;
+      }
+      .card {
+        flex: 1 1 200px;
+        margin: 10px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s;
+      }
+      .card:hover {
+        transform: scale(1.05);
+      }
+      #prompt {
+        margin-top: 20px;
+        font-size: 18px;
+      }
+      #output {
+        margin-top: 20px;
+        font-size: 16px;
+        white-space: pre-line;
+      }
+      button {
+        margin-top: 15px;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        background: #007bff;
+        color: #fff;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #0056b3;
+      }
+      .footer {
+        margin-top: 40px;
+        padding: 20px;
+        background: #111;
+        color: #fff;
+      }
+      .footer h3 {
+        margin: 0;
+        font-size: 16px;
+      }
+      .social-icons {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+      .social-icons a {
+        margin: 10px;
+        font-size: 28px;
+        color: #fff;
+        text-decoration: none;
+      }
+      .social-icons a:hover {
+        color: #00ffcc;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Marita and Josué present, activity 1</h1>
+    <h1>🎮 Life Situations with Modal Verbs</h1>
+    <p>Pick a card and practice speaking with modal verbs!</p>
+
+    <!-- Situation Cards -->
+    <div class="card-container">
+      <div class="card" onclick="showPrompt('Doctor')">🩺 Doctor</div>
+      <div class="card" onclick="showPrompt('School')">🏫 School</div>
+      <div class="card" onclick="showPrompt('Supermarket')">🛒 Supermarket</div>
+      <div class="card" onclick="showPrompt('Transport')">🚲 Transport</div>
+    </div>
+
+    <!-- Prompt + Listening -->
+    <div id="prompt"></div>
+    <button onclick="startListening()">🎤 Speak</button>
+    <div id="output"></div>
+
+    <!-- Josbrevar07 Special Footer -->
+    <!-- Josbrevar07 Special Footer -->
+    <div class="footer">
+      <h3>Designed by: Josbrevar07. © 2026. All Rights Reserved</h3>
+      <div class="social-icons">
+        <a href="https://walink.co/341b8e" title="WhatsApp"
+          ><i class="fa-brands fa-whatsapp"></i
+        ></a>
+        <a href="https://www.facebook.com/josue.brenesvargas" title="Facebook"
+          ><i class="fa-brands fa-facebook"></i
+        ></a>
+        <a href="https://www.instagram.com/josbrevar07/" title="Instagram"
+          ><i class="fa-brands fa-instagram"></i
+        ></a>
+        <a href="https://www.youtube.com/@josbrevar0773" title="YouTube"
+          ><i class="fa-brands fa-youtube"></i
+        ></a>
+        <a href="https://clases-de-manejo-personalizadas.com/" title="Website"
+          ><i class="fa-brands fa-chrome"></i
+        ></a>
+      </div>
+    </div>
+
+    <!-- Font Awesome CDN (latest version) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Font Awesome for icons -->
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      let currentSituation = "";
+
+      function showPrompt(situation) {
+        currentSituation = situation;
+        let text = "";
+        if (situation === "Doctor")
+          text =
+            "You are at the doctor. Use obligation (must/have to) or advice (should).";
+        if (situation === "School")
+          text =
+            "You are at school. Use obligation (must/have to) or permission (can/may).";
+        if (situation === "Supermarket")
+          text =
+            "You are at the supermarket. Use possibility (might/could/may) or advice (should).";
+        if (situation === "Transport")
+          text =
+            "You are in transport. Use ability (can/could) or prohibition (must not/cannot).";
+        document.getElementById("prompt").innerText = text;
+      }
+
+      function startListening() {
+        const recognition = new (
+          window.SpeechRecognition || window.webkitSpeechRecognition
+        )();
+        recognition.lang = "en-US";
+        recognition.start();
+
+        recognition.onresult = function (event) {
+          const speech = event.results[0][0].transcript.toLowerCase();
+          document.getElementById("output").innerText = "You said: " + speech;
+
+          let correct = false;
+
+          // Check by situation and modal function
+          if (
+            currentSituation === "Doctor" &&
+            (speech.includes("must") ||
+              speech.includes("have to") ||
+              speech.includes("should"))
+          )
+            correct = true;
+          if (
+            currentSituation === "School" &&
+            (speech.includes("must") ||
+              speech.includes("have to") ||
+              speech.includes("can") ||
+              speech.includes("may"))
+          )
+            correct = true;
+          if (
+            currentSituation === "Supermarket" &&
+            (speech.includes("might") ||
+              speech.includes("could") ||
+              speech.includes("may") ||
+              speech.includes("should"))
+          )
+            correct = true;
+          if (
+            currentSituation === "Transport" &&
+            (speech.includes("can") ||
+              speech.includes("could") ||
+              speech.includes("must not") ||
+              speech.includes("cannot"))
+          )
+            correct = true;
+
+          if (correct) {
+            document.getElementById("output").innerText +=
+              "\n✅ Correct! You used the right modal for this situation.";
+          } else {
+            document.getElementById("output").innerText +=
+              "\n❌ Try again. Use the correct modal for this situation.";
+          }
+        };
+      }
+    </script>
+  </body>
+</html>
